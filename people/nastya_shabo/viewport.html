@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Во все тяжкие — Уолтер Уайт</title>
+  <style>
+    /* ---------- ТЕМА: ЭЛЕГАНТНЫЙ ЧЁРНЫЙ ---------- */
+    :root{
+      --bg:#0a0a0a;
+      --surface:#0f0f10;
+      --card:#0c0c0d;
+      --text:#eaeaea;
+      --muted:#bdbdbd;
+      --subtle:#7a7a7a;
+      --border:#1a1a1d;
+      --accent:#ffffff;
+      --accent-soft:#dcdcdc;
+      --shadow: rgba(0,0,0,.5);
+    }
+
+    html{ scroll-behavior:smooth; }
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font:16px/1.7 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1400px 700px at 15% -10%, #121214 0%, transparent 60%),
+        radial-gradient(1100px 600px at 90% -20%, #151518 0%, transparent 65%),
+        var(--bg);
+      letter-spacing:.2px;
+    }
+
+    a{color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; transition:.2s;}
+    a:hover{border-bottom-color:currentColor;}
+
+    header{
+      position:sticky; top:0; z-index:20;
+      background:rgba(10,10,10,.75); backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .wrap{max-width:1060px; margin:0 auto; padding:16px 22px;}
+    nav{display:flex; gap:16px; align-items:center; justify-content:space-between;}
+    nav .brand{font-weight:700; letter-spacing:.6px;}
+    nav .links{display:flex; gap:12px; flex-wrap:wrap;}
+    nav .links a{padding:8px 12px; border-radius:9999px; border:1px solid var(--border); color:var(--accent-soft);}
+    nav .links a:hover{background:#131314; color:var(--accent);}
+
+    h1{font-size:clamp(30px, 4.5vw, 44px); margin:20px 0 6px;}
+    h2{font-size:clamp(22px, 3.2vw, 30px); margin:26px 0 12px;}
+    h3{font-size:clamp(18px, 2.4vw, 22px); margin:20px 0 10px; color:var(--accent-soft); font-weight:600;}
+    .lead{color:var(--muted); max-width:74ch}
+
+    main{padding:28px 22px;}
+    section{margin:34px 0; padding:24px; border:1px solid var(--border); background:linear-gradient(180deg, #0c0c0d, #0d0d0e); border-radius:18px; box-shadow: 0 12px 28px var(--shadow);}
+
+    /* ---------- КАРТОЧКА ---------- */
+    .card{
+      display:grid; gap:20px;
+      grid-template-columns: 1fr;
+      background:linear-gradient(180deg, #0b0b0c, #0f0f10);
+      border:1px solid var(--border);
+      border-radius:20px; padding:18px;
+      box-shadow: 0 10px 24px var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover{ transform:translateY(-2px); box-shadow: 0 16px 36px rgba(0,0,0,.6); }
+
+    figure{margin:0;}
+    .poster{
+      width:100%; height:auto; display:block; border-radius:16px;
+      border:1px solid var(--border);
+      transition: filter .3s ease, transform .25s ease;
+      filter: grayscale(12%) contrast(1.05);
+    }
+    .poster:hover{ filter: grayscale(0%) contrast(1.08); transform:scale(1.01);}
+    .meta{color:var(--subtle); font-size:14px;}
+
+    /* ---------- СПИСКИ ---------- */
+    ul.check{ list-style:none; padding-left:0; margin:10px 0 0;}
+    ul.check li{ position:relative; padding-left:28px; margin:10px 0; color:var(--accent-soft); }
+    ul.check li::before{ content:"•"; position:absolute; left:8px; top:0; color:#8c8c8c; }
+
+    .pill{ display:inline-block; padding:3px 10px; border:1px solid var(--border); border-radius:9999px; color:var(--muted); font-size:12px; }
+
+    /* ---------- СПОЙЛЕРЫ ---------- */
+    details{ border:1px dashed var(--border); border-radius:14px; padding:12px 14px; background:#0d0d0e; }
+    details + details{ margin-top:12px; }
+    details summary{ cursor:pointer; user-select:none; color:var(--accent-soft); outline:none; }
+    details[open]{ background:#0f0f10; }
+    .spoiler{ color:#cfcfcf; }
+
+    /* ---------- ХЭРО ---------- */
+    .hero{
+      display:grid; gap:16px;
+      grid-template-columns: 1fr;
+      align-items:center;
+      background:linear-gradient(180deg, #0b0b0c 0%, #0f0f10 100%);
+      border:1px solid var(--border); border-radius:20px; padding:22px;
+    }
+    .hero .title{ font-weight:800; letter-spacing:.4px; }
+
+    /* ---------- ТАЙМЛАЙН ---------- */
+    .timeline{ display:grid; gap:14px; }
+    .event{
+      display:grid; gap:6px;
+      grid-template-columns: 120px 1fr;
+      align-items:start;
+      padding:12px 0;
+      border-bottom:1px solid #141416;
+    }
+    .event:last-child{ border-bottom:none; }
+    .event .time{ color:#a5a5a5; font-size:13px; }
+    .event .desc{ color:#d8d8d8; }
+
+    /* ---------- СЕТКА НА ДЕСКТОПЕ ---------- */
+    @media (min-width:1024px){
+      .hero{ grid-template-columns: 1.2fr 1fr; }
+      .card{ grid-template-columns: 1fr 1.2fr; }
+      .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+    }
+
+    footer{ display:none; }
+
+    /* === МОБИЛЬНАЯ ВЕРСИЯ (≤768px) — ДОБАВЛЕНО === */
+    @media (max-width:768px){
+      /* компактнее поля */
+      .wrap{ padding:14px; }
+      main{ padding:22px 14px; }
+      section{ padding:18px; border-radius:14px; }
+
+      /* навигация прокручивается в одну строку, если не помещается */
+      nav{ gap:10px; }
+      nav .brand{ font-size:15px; }
+      nav .links{
+        gap:8px;
+        overflow-x:auto;
+        white-space:nowrap;
+        scrollbar-width:none; /* Firefox */
+      }
+      nav .links::-webkit-scrollbar{ display:none; } /* WebKit */
+      nav .links a{ padding:6px 10px; font-size:14px; }
+
+      /* карточки и хиро — чуть плотнее */
+      .card{ padding:16px; border-radius:16px; gap:14px; }
+      .hero{ padding:18px; gap:12px; }
+
+      /* таймлайн: время над описанием */
+      .event{
+        grid-template-columns: 1fr;
+        gap:2px;
+        padding:10px 0;
+      }
+      .event .time{ font-weight:600; font-size:12px; color:#b5b5b5; }
+
+      /* двухколоночные блоки — в столбик */
+      .grid-2{ display:block; }
+      .grid-2 > * + *{ margin-top:14px; }
+
+      /* списки — компактнее отступы */
+      ul.check li{ margin:8px 0; padding-left:24px; }
+      ul.check li::before{ left:6px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav aria-label="Основная навигация">
+        <div class="brand">Breaking Bad</div>
+        <div class="links">
+          <a href="#about">О сериале</a>
+          <a href="#walter">Уолтер Уайт</a>
+          <a href="#arc">Арка</a>
+          <a href="#moments">Моменты</a>
+          <a href="#symbols">Символы</a>
+          <a href="#links">Назад</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- ХЭРО-БЛОК ДЛЯ НАЧАЛА ПРОКРУТКИ -->
+    <section class="hero">
+      <div>
+        <div class="pill">2008–2013 • драматический сериал</div>
+        <h1 class="title">«Во все тяжкие» — история о контроле, силе и цене выбора</h1>
+        <p class="lead">
+          «Во все тяжкие» — это не просто сериал про мет и пустыню. Это про то, как обычный человек постепенно перестаёт быть «обычным». Ты включаешь первую серию — там 		уставший учитель химии, ипотека, семья, диагноз. И думаешь: ну драма. А через пару сезонов ловишь себя на том, что сидишь с открытым ртом и пытаешься понять, в какой 	момент мистер Уайт превратился в Хайзенберга — и почему это выглядело таким логичным шагом. Сериал крутой тем, что не давит дешёвыми поворотами: ставка растёт честно, 	мелкие решения накапливаются, и вот уже «разочек» становится образом жизни. Плюс атмосфера: жар, тишина, редкие взрывы — и каждый звук, как выстрел. Смотреть легко — 	переживать сложно.
+        </p>
+      </div>
+      <figure>
+        <img
+          class="poster"
+          src="https://diskomir.ru/upload/iblock/945/8ofd1p2ozta30uhoxpsyvo7eb7xf6ybn/gobelen-tkanevyy-uolter-uayt-i-dzhessi-pinkmen-vo-vse-tyazhkie.jpg"
+          alt="Уолтер Уайт в шляпе Хайзенберга"
+          referrerpolicy="no-referrer"
+          loading="lazy"
+        />
+        <figcaption class="meta">«Say my name» — Heisenberg</figcaption>
+      </figure>
+    </section>
+
+    <article id="about" aria-labelledby="t-about">
+      <h2 id="t-about">Про Уолтера Уайта, если по-простому.</h2>
+      <ul class="check">
+        <li>Он стартует как «невидимка»: умный, но недооценённый, усталый, зажатый. Рак подталкивает его «быстро заработать» для семьи. Сначала он реально верит, что делает это 	ради близких. Потом появляется шляпа, имя «Хайзенберг», и у него включается другое топливо — гордость и жажда контроля.</li>
+        <li>С Джесси у него странная связка — то учитель и ученик, то почти семья, то токсичная зависимость. Со Скайлер — дистанция и страх: она видит, что муж меняется, и это 	не тот человек, за которого она выходила..</li>
+        <li>Наверное, самая честная точка в его арке — признание: «Я делал это для себя. Мне нравилось».</li>
+      </ul>
+      <div class="btns" style="display:flex; gap:10px; margin-top:12px;">
+        <a class="pill" href="#moments">К ключевым моментам</a>
+        <a class="pill" href="#symbols">К символике</a>
+      </div>
+    </article>
+
+    <section id="walter" aria-labelledby="t-walter">
+      <h2 id="t-walter">Любимый персонаж: Уолтер Уайт</h2>
+      <div class="card">
+        <figure>
+          <img
+            class="poster"
+            src="https://upload.wikimedia.org/wikipedia/en/0/03/Walter_White_S5B.png"
+            alt="Уолтер Уайт, портрет"
+            referrerpolicy="no-referrer"
+            loading="lazy"
+          />
+          <figcaption class="meta">Тихий учитель, который перестаёт быть тихим.</figcaption>
+        </figure>
+        <div>
+          <h3>Кто он</h3>
+          <p>
+              Представь гения-химика, которого жизнь прижала к батарее: работа за копейки, счета, ощущение «меня недооценили». Случается личный обрыв — и Уолт резко сворачивает 	      не туда. С этого момента «я всё просчитал» становится оправданием риска, а «ради семьи» — удобной маской, за которой прячутся амбиции, которым давно тесно.
+          </p>
+          <h3>Ключевые черты</h3>
+          <ul class="check">
+            <li>Методичный перфекционист. План — как ритуал. Ошибок быть не должно.</li>
+            <li>Маниакальный контроль. Контролирует всё: деньги, схемы, людей, исходы.</li>
+            <li>Гордость на разогреве. «Я сделаю лучше всех» медленно вытесняет «так правильно».</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="arc" aria-labelledby="t-arc">
+      <h2 id="t-arc">Арка персонажа (без спойлеров)</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Старт</h3>
+          <p>Слабая позиция, зависимость от обстоятельств, непризнанный талант.</p>
+          <h3>Поворот</h3>
+          <p>Рациональная мотивация сменяется эмоциональной: «смогу — значит должен».</p>
+        </div>
+        <div>
+          <h3>Эскалация</h3>
+          <p>Рост компетенций тянет за собой ответственность и риск, а ещё — власть.</p>
+          <h3>Конфликт ценностей</h3>
+          <p>Выбор между «правильным» и «эффективным» перестаёт быть очевидным.</p>
+        </div>
+      </div>
+
+      <div class="timeline" style="margin-top:14px;">
+        <div class="event">
+          <div class="time">Компетенция</div>
+          <div class="desc">Химия как суперсила: знание превращается в инструмент давления.</div>
+        </div>
+        <div class="event">
+          <div class="time">Отношения</div>
+          <div class="desc">Двойная жизнь искажает доверие в семье.</div>
+        </div>
+        <div class="event">
+          <div class="time">Идентичность</div>
+          <div class="desc">Персона «Хайзенберг» становится не маской, а ответом на вопрос «кто я».</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="moments" aria-labelledby="t-moments">
+      <h2 id="t-moments">Интересные моменты с персонажем</h2>
+      <p class="meta">Первый список — без спойлеров. Ниже — раскрывающиеся блоки со спойлерами (открывать по желанию).</p>
+
+      <h3>Без спойлеров</h3>
+      <ul class="check">
+        <li>Переговоры на холодной голове. Там, где обычно давят силой, он давит логикой. Спокойный голос, чёткие цифры — и «альфа-самцы» начинают мяться.</li>
+        <li>Химия как лайфхак. Никакой магии: бытовая химия + смекалка = решения, до которых «ломай-и-властвуй» даже не додумается.</li>
+        <li>Фирменный образ. Шляпа, очки, жёсткая посадка плеч — минимум деталей, максимум эффекта. Появляется в кадре — и воздух в комнате меняется.</li>
+      </ul>
+
+      <h3 style="margin-top:16px;">Со спойлерами (аккуратно!)</h3>
+      <details>
+        <summary>Момент «Я и есть опасность» </summary>
+        <p class="spoiler">
+          Сцена, где Уолтер формулирует новую самооценку — не жертва обстоятельств, а источник угрозы.
+          Это поворот в динамике власти внутри семьи и в собственном восприятии силы.
+        </p>
+      </details>
+      <details>
+        <summary>Знаменитая «пицца на крыше»</summary>
+        <p class="spoiler">
+          Бытовой конфликт превращается в визуальный момент, который подчеркнул напряжение и нелепость
+          попыток «нормализовать» двойную жизнь. Это реальный одно дубль, ставший мемом (да, фанаты потом реально кидали пиццы на тот дом).
+        </p>
+      </details>
+      <details>
+        <summary>«Ландыш» для Брока</summary>
+        <p class="spoiler">
+          Уолт тайно травит мальчика ягодами обычного садового растения, чтобы все решили: виноват его враг. Мальчик выживает, а Уолт таким образом возвращает союзника на свою сторону. Коротко: он готов зайти очень далеко и делает это так, что никто сразу не понимает.
+        </p>
+      </details>
+    </section>
+
+    <section id="symbols" aria-labelledby="t-symbols">
+      <h2 id="t-symbols">Символика и визуальный язык</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Цвет и костюм</h3>
+          <p>Тёмные, «стерильные» оттенки подчёркивают нарастающую дистанцию героя.</p>
+        </div>
+        <div>
+          <h3>Предметы</h3>
+          <p>Шляпа и очки как «переключатель» с личности на личность; лаборатория — храм контроля и порядка.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
