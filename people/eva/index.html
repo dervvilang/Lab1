@@ -1,33 +1,37 @@
 <!DOCTYPE html>
-<!-- Объявление типа документа: HTML5, помогает браузеру рендерить страницу в современном стандарте -->
 <html lang="ru">
-  <!-- Корневой элемент HTML; атрибут lang указывает основной язык содержимого (русский) -->
   <head>
-    <!-- Голова документа: метаданные, заголовок, стили, подключаемые ресурсы -->
     <meta charset="utf-8" />
-    <!-- Кодировка UTF-8: корректное отображение русских символов и спецзнаков -->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <!-- Адаптивность: ширина вьюпорта равна ширине устройства, базовый масштаб 1.0 -->
+
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&display=swap"
       rel="stylesheet"
     />
 
     <title>Hannibal</title>
-    <style>
-      :root {
-        --bg: #100201; /* общий фон */
-        --paper: #1f0a09; /* фон карточек/секций */
-        --ink: #ecd7bb; /* основной текст*/
-        --muted: #ecd7bb; /* вторичный текст */
-        --brand: #7b1e2b; /* основной бордовый акцент */
-        --brand-2: #a3323f; /* светлее бордового */
-        --line: #37221d; /* границы/разделители */
+    <meta
+      name="description"
+      content="Фан-страница сериала «Ганнибал»: о сериале, персонажи, арки, цитаты и символы."
+    />
 
-        --radius: 16px; /* скругления карточек */
-        --gap: 24px; /* базовый шаг отступов */
-        --maxw: 1100px; /* ширина контейнера */
-        --nav-h: 80px; /* высота навигации */
+    <style>
+      /* Дизайн‑токены */
+      :root {
+        --bg: #100201;
+        --paper: #1f0a09;
+        --ink: #ecd7bb;
+        --muted: #ecd7bb;
+        --brand: #7b1e2b;
+        --brand-2: #a3323f;
+        --line: #37221d;
+        --radius: 16px;
+        --gap: 24px;
+        --maxw: 1100px;
+        --nav-h: 80px;
       }
 
       * {
@@ -81,9 +85,11 @@
       }
 
       .site-header {
-        position: sticky;
+        position: fixed;
         top: 0;
-        z-index: 100;
+        left: 0;
+        right: 0;
+        z-index: 1000;
         isolation: isolate;
       }
       .nav {
@@ -97,7 +103,7 @@
         display: flex;
         align-items: center;
         gap: 16px;
-        justify-content: space-between; /* FIX: было space_between — опечатка */
+        justify-content: space-between;
       }
       .nav__logo {
         margin-right: auto;
@@ -161,6 +167,7 @@
 
       section {
         padding: 56px 0;
+        scroll-margin-top: calc(var(--nav-h) + 16px);
       }
       .section-header {
         margin-bottom: 16px;
@@ -170,7 +177,6 @@
         max-width: 70ch;
       }
 
-      /* NEW: базовый стиль для H1 — главный заголовок страницы */
       h1 {
         margin: 0 0 8px;
         font-size: 56px;
@@ -178,7 +184,6 @@
         letter-spacing: 0.3px;
         color: #bc9d71;
       }
-      /* CHANGED: h2 стал немного меньше, остальное без изменений */
       h2 {
         margin: 0 0 8px;
         font-size: 42px;
@@ -196,7 +201,7 @@
         background: var(--paper);
       }
 
-      /* ===== «О сериале»: медиа одной высоты с заголовком + текстом ===== */
+      /* Лэйаут «about» (2 колонки) */
       .about {
         display: flex;
         align-items: stretch;
@@ -209,25 +214,17 @@
           align-items: initial;
         }
       }
-
       .about__left {
-        /* левая колонка, объединяющая заголовок и текст */
-        flex: 1 1 55%; /* ширина левой колонки */
-        min-width: 320px; /* минимум для читабельности */
-        display: flex; /* вертикальная компоновка внутри */
-        flex-direction: column; /* сначала заголовок, потом текст */
+        flex: 1 1 55%;
+        min-width: 320px;
+        display: flex;
+        flex-direction: column;
       }
-      .about__text {
-        /* текст под заголовком */
-      }
-
       .about__media {
-        /* правая колонка слайдера */
-        flex: 0 1 40%; /* ширина правой колонки */
-        min-width: 280px; /* чтобы слайдер не был слишком узким */
-        display: flex; /* даём .slider занять 100% высоты */
+        flex: 0 1 40%;
+        min-width: 280px;
+        display: flex;
       }
-
       .about__facts {
         padding-left: 18px;
         list-style: disc;
@@ -237,12 +234,13 @@
         color: var(--brand-2);
       }
 
-      /* ===== Слайдер ===== */
+      /* Слайдер */
       .slider {
         position: relative;
         height: 100%;
         width: 100%;
         overflow: hidden;
+        aspect-ratio: 16/10;
       }
       .slider__track {
         display: flex;
@@ -262,7 +260,6 @@
         object-fit: cover;
         display: block;
       }
-
       .slider__btn {
         position: absolute;
         top: 50%;
@@ -282,43 +279,144 @@
       }
       .slider__btn--prev {
         left: 10px;
-      } /* кнопка у левого края изображения */
+      }
       .slider__btn--next {
         right: 10px;
-      } /* кнопка у правого края изображения */
+      }
 
-      /* Мобилка ≤768px — минимальные правки для соответствия ТЗ */
+      /* Сетка карточек */
+      .grid {
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 16px;
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      /* Таймлайн */
+      .timeline {
+        position: relative;
+        margin: 8px 0 0;
+        padding-left: 28px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--line);
+      }
+      .tl-item {
+        position: relative;
+        margin: 0 0 18px;
+      }
+      .tl-item::before {
+        content: "";
+        position: absolute;
+        left: -20px;
+        top: 6px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--brand-2);
+        box-shadow: 0 0 0 3px rgba(163, 50, 63, 0.25);
+      }
+      .tl-title {
+        font-weight: 700;
+        color: #d9c29f;
+      }
+      .tl-meta {
+        opacity: 0.9;
+        font-size: 0.95em;
+      }
+
+      /* Цитаты */
+      .quote-card blockquote {
+        margin: 0 0 8px;
+        font-style: italic;
+      }
+      .quote-card .q-original {
+        opacity: 0.95;
+      }
+      .quote-card .q-ru {
+        opacity: 0.95;
+      }
+      .quote-card footer {
+        opacity: 0.7;
+        font-size: 0.95em;
+      }
+
+      /* Символы */
+      .symbol-card h3 {
+        margin: 0 0 6px;
+        font-size: 26px;
+        color: #d9c29f;
+      }
+      .symbol-card p {
+        margin: 0;
+      }
+
+      /* Мобайл ≤768px */
       @media (max-width: 768px) {
         h1 {
           font-size: 40px;
-        } /* NEW: уменьшаем главный заголовок на мобильных */
+        }
         h2 {
           font-size: 32px;
-        } /* NEW: подзаголовки тоже компактнее */
+        }
         .section-box {
           padding: 16px;
-        } /* NEW: меньше внутренние отступы карточки */
+        }
         .about {
           flex-direction: column;
-        } /* NEW: колонки складываются в одну */
+        }
+
+        /* Навбар: горизонтальная прокрутка вместо переноса */
+        .nav__menu {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overflow-y: hidden;
+          -webkit-overflow-scrolling: touch;
+        }
+        .nav__item {
+          flex: 0 0 auto;
+        }
       }
 
-      /* Десктоп ≥1024px — уточняем пропорции колонок */
+      /* Десктоп ≥1024px */
       @media (min-width: 1024px) {
         .about__left {
           flex: 0 1 58%;
-        } /* NEW: чуть больше места тексту на больших экранах */
+        }
         .about__media {
           flex: 0 1 42%;
-        } /* NEW: и немного меньше — медиа */
+        }
         .section-intro {
           max-width: 60ch;
-        } /* NEW: комфортная длина строки на десктопе */
+        }
+      }
+
+      /* Доступность: уменьшенное движение */
+      @media (prefers-reduced-motion: reduce) {
+        .slider__track {
+          transition: none;
+        }
+      }
+
+      body {
+        padding-top: calc(var(--nav-h) + 1px);
       }
     </style>
   </head>
   <body>
     <a href="#about" class="skip-link">Перейти к основному содержанию</a>
+
     <header class="site-header">
       <nav class="nav" aria-label="Hannibal">
         <div class="nav__inner">
@@ -345,19 +443,18 @@
     </header>
 
     <main id="top" tabindex="-1">
+      <!-- О СЕРИАЛЕ -->
       <section id="about" aria-labelledby="about-title">
         <div class="section-box">
           <div class="about">
             <div class="about__left">
               <header class="section-header">
-                <!-- CHANGED: h2 → h1 по требованию ТЗ -->
                 <h1 id="about-title">О сериале</h1>
                 <p class="section-intro">
                   <strong>«Ганнибал»</strong> — психологический триллер (2013–2015) о сложных
                   отношениях профайлера Уилла Грэма и доктора Ганнибала Лектора.
                 </p>
               </header>
-
               <div class="about__text">
                 <p>
                   Сериал сочетает криминальную драму, психологический хоррор и визуально
@@ -375,7 +472,6 @@
                 </p>
               </div>
             </div>
-
             <aside class="about__media" aria-label="Галерея постеров сериала">
               <div class="slider" data-component="slider" aria-roledescription="слайдер">
                 <div class="slider__track" id="aboutTrack" style="transform: translateX(0)">
@@ -402,7 +498,7 @@
                       src="img/3840x (2).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 3"
                       loading="lazy"
                     />
                   </figure>
@@ -411,7 +507,7 @@
                       src="img/3840x (3).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 4"
                       loading="lazy"
                     />
                   </figure>
@@ -420,7 +516,7 @@
                       src="img/3840x (4).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 5"
                       loading="lazy"
                     />
                   </figure>
@@ -429,7 +525,7 @@
                       src="img/3840x (5).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 6"
                       loading="lazy"
                     />
                   </figure>
@@ -438,7 +534,7 @@
                       src="img/3840x.webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 7"
                       loading="lazy"
                     />
                   </figure>
@@ -447,7 +543,7 @@
                       src="img/3840x (1).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 8"
                       loading="lazy"
                     />
                   </figure>
@@ -456,7 +552,7 @@
                       src="img/3840x (8).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 9"
                       loading="lazy"
                     />
                   </figure>
@@ -465,7 +561,7 @@
                       src="img/3840x (9).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 10"
                       loading="lazy"
                     />
                   </figure>
@@ -474,7 +570,7 @@
                       src="img/3840x (10).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 11"
                       loading="lazy"
                     />
                   </figure>
@@ -483,7 +579,7 @@
                       src="img/3840x (11).webp"
                       width="640"
                       height="900"
-                      alt="Постер сериала «Ганнибал» 2"
+                      alt="Постер сериала «Ганнибал» 12"
                       loading="lazy"
                     />
                   </figure>
@@ -509,46 +605,366 @@
           </div>
         </div>
       </section>
+
+      <!-- ГАННИБАЛ ЛЕКТОР -->
+      <section id="hannibal" aria-labelledby="hannibal-title">
+        <div class="section-box">
+          <header class="section-header">
+            <h2 id="hannibal-title">Ганнибал Лектор</h2>
+          </header>
+          <div class="about">
+            <aside class="about__media" aria-label="Галерея портретов Ганнибала">
+              <div class="slider" data-component="slider" aria-roledescription="слайдер">
+                <div class="slider__track" style="transform: translateX(0)">
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (12).jpg"
+                      alt="Ганнибал Лектор — портрет 1"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (13).jpg"
+                      alt="Ганнибал Лектор — портрет 2"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (14).jpg"
+                      alt="Ганнибал Лектор — портрет 3"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (15).jpg"
+                      alt="Ганнибал Лектор — портрет 4"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (16).jpg"
+                      alt="Ганнибал Лектор — портрет 5"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (17).jpg"
+                      alt="Ганнибал Лектор — портрет 6"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (18).jpg"
+                      alt="Ганнибал Лектор — портрет 7"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (19).jpg"
+                      alt="Ганнибал Лектор — портрет 8"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (20).jpg"
+                      alt="Ганнибал Лектор — портрет 9"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (21).jpg"
+                      alt="Ганнибал Лектор — портрет 10"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (22).jpg"
+                      alt="Ганнибал Лектор — портрет 11"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (23).jpg"
+                      alt="Ганнибал Лектор — портрет 12"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (24).jpg"
+                      alt="Ганнибал Лектор — портрет 13"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (25).jpg"
+                      alt="Ганнибал Лектор — портрет 14"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                  <figure class="slide">
+                    <img
+                      src="img/3840x (26).jpg"
+                      alt="Ганнибал Лектор — портрет 15"
+                      width="640"
+                      height="900"
+                      loading="lazy"
+                    />
+                  </figure>
+                </div>
+                <button
+                  class="slider__btn slider__btn--prev"
+                  type="button"
+                  aria-label="Предыдущий слайд"
+                  data-prev
+                >
+                  ‹
+                </button>
+                <button
+                  class="slider__btn slider__btn--next"
+                  type="button"
+                  aria-label="Следующий слайд"
+                  data-next
+                >
+                  ›
+                </button>
+              </div>
+            </aside>
+            <div class="about__left">
+              <div class="about__text">
+                <p>
+                  Хирургическая аккуратность, эстетизм и рациональная холодность — ключ к его образу
+                  и влиянию на Уилла Грэма. Прекрасный и страшный — искусство смерти
+                </p>
+                <ul class="about__facts">
+                  <li>
+                    <strong>Деятельность:</strong> психиатр, консультант ФБР, гастрономический
+                    энтузиаст
+                  </li>
+                  <li>
+                    <strong>Черты:</strong> манипулятивный интеллект, безупречные манеры, глубокий
+                    вкус и артистичность в жестокости
+                  </li>
+                  <li>
+                    <strong>Связь с Уиллом::</strong> «игра зеркал» — Лектер видит в Уилле не просто
+                    объект, а отражение себя
+                  </li>
+                  <li>
+                    <strong>Визуальные мотивы:</strong> отчётливые линии костюма, тёмные текстуры
+                    (шерсть, твид), багровые акценты в деталях
+                  </li>
+                </ul>
+                <p>
+                  Лектер не терпит грубости, презирает пошлость — всё «рвёт» к эстетике. Он
+                  постоянно держит пространство под контролем: в словах, жестах, меню. Его кухня —
+                  не просто пища, а концепт, где пересекаются утончённость и ужас.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- АРКА -->
+      <section id="arc" aria-labelledby="arc-title">
+        <div class="section-box">
+          <header class="section-header">
+            <h2 id="arc-title">Арка</h2>
+            <p class="section-intro">Крупные этапы драматургии без подробностей.</p>
+          </header>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-title">Сезон 1 — Эстетика ужаса, граница «нормы»</div>
+              <div class="tl-meta">
+                Исследуется граница между нормальным и патологическим: что значит быть
+                «сумасшедшим»? Лектер предлагает преломить представления о жестокости через
+                художественный ракурс. Уилл робко вступает в контакт с темным.
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-title">Сезон 2 — РВласть зеркала и власть рассказа</div>
+              <div class="tl-meta">
+                Лектер берет под контроль нарратив: он не просто участник, он автор происходящего.
+                Он умело переписывает травмы, пускает в ход символы и маски. Сцены насилия
+                становятся языком. Уилл вынужден выбирать между подчинением и сопротивлением.
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-title">
+                Сезон 3 — Разрушение власти, освобождение или обесценивание
+              </div>
+              <div class="tl-meta">
+                Когда власть Лектера начинает рушиться, мир ломается: фигуры меняют местами. Уилл
+                пытается вернуть контроль, но уже другой ценой. Входит архетип «охотника» — вопрос о
+                том, кто охотник, а кто — добыча.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ЦИТАТЫ -->
+      <section id="quotes" aria-labelledby="quotes-title">
+        <div class="section-box">
+          <header class="section-header">
+            <h2 id="quotes-title">Цитаты</h2>
+            <p class="section-intro">Короткие высказывания.</p>
+          </header>
+          <div class="grid">
+            <figure class="card quote-card">
+              <blockquote class="q-original">
+                “Occasionally I drop a teacup to shatter on the floor on purpose. I’m not satisfied
+                when it doesn’t gather itself up again. Someday, perhaps a cup will come together.”
+              </blockquote>
+              <blockquote class="q-ru">
+                «Иногда я умышленно роняю чайную чашку на пол, чтобы она разбилась. Меня не
+                устраивает, когда она не собирается обратно. Однажды, быть может, чашка сойдется
+                вновь.»
+              </blockquote>
+              <footer>— Hannibal</footer>
+            </figure>
+            <figure class="card quote-card">
+              <blockquote class="q-original">
+                “Killing must feel good to God, too. He does it all the time, and are we not created
+                in his image?”
+              </blockquote>
+              <blockquote class="q-ru">
+                «Убивать должно быть приятно самому Богу. Он всё время этим занимается. А разве мы
+                не созданы по Его образу и подобию?»
+              </blockquote>
+              <footer>— Hannibal</footer>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- СИМВОЛЫ -->
+      <section id="symbols" aria-labelledby="symbols-title">
+        <div class="section-box">
+          <header class="section-header">
+            <h2 id="symbols-title">Символы</h2>
+            <p class="section-intro">Повторяющиеся визуальные мотивы и их смысловые роли.</p>
+          </header>
+          <div class="grid">
+            <div class="card symbol-card">
+              <h3>Олень / рогатое животное</h3>
+              <p>
+                Служит визуальным проводником подсознательного, символом связи между Уиллом и
+                Лектером; образ трансформации и теневой «двойник». Олень всплывает в видениях Уилла,
+                как тёмный вестник интуиции или внутреннего конфликта.
+              </p>
+            </div>
+            <div class="card symbol-card">
+              <h3>Кровь / вино / красные жидкости</h3>
+              <p>
+                Сакрализация насилия, визуальный ритм, ироничные «евхаристические» мотивы —
+                сочетание торжественного и ужасного. Намёк на порчу чистоты, на нарушение границ и
+                вторжение «ужаса» в «норму».
+              </p>
+            </div>
+            <div class="card symbol-card">
+              <h3>Кулинария / еда / сервировка</h3>
+              <p>
+                Контроль, маскировка, трансформация — кухня как театр вкуса и власти. Приготовление
+                блюд как акт эстетического доминирования; блюда, напоминающие человеческую плоть или
+                символичные ингредиенты.
+              </p>
+            </div>
+            <div class="card symbol-card">
+              <h3>Анатомия / медицинские инструменты</h3>
+              <p>
+                Хирургическая точность, рациональность, холодный расчёт — с одной стороны наука, с
+                другой — насилие. Сцены «под микроскопом», кадры инструментов, вскрытий, рассечения
+                тканей, акцент на деталях.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <script>
+      // Кнопка «Назад» (фолбэк на прокрутку к началу)
       (function () {
-        const root = document.querySelector('[data-component="slider"]');
-        if (!root) return; // если слайдера нет на странице — выходим
+        const btn = document.getElementById("nav-back");
+        if (!btn) return;
+        btn.addEventListener("click", () => {
+          if (history.length > 1) history.back();
+          else window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
 
-        const track = root.querySelector(".slider__track"); // контейнер слайдов
-        const slides = Array.from(track.children); // список слайдов (figure.slide)
-        const prev = root.querySelector("[data-prev]"); // кнопка «назад»
-        const next = root.querySelector("[data-next]"); // кнопка «вперёд»
-
-        let index = 0; // текущий индекс слайда
-
-        function update() {
-          const offset = -index * 100; // смещение на ширину слайдера
-          track.style.transform = `translateX(${offset}%)`;
-        }
-
-        function go(to) {
-          index = (to + slides.length) % slides.length; // кольцевой переход
+      // Инициализация слайдеров (для всех [data-component="slider"])
+      (function () {
+        const sliders = document.querySelectorAll('[data-component="slider"]');
+        sliders.forEach((root) => {
+          const track = root.querySelector(".slider__track");
+          if (!track) return;
+          const slides = Array.from(track.children);
+          const prev = root.querySelector("[data-prev]");
+          const next = root.querySelector("[data-next]");
+          let index = 0;
+          const update = () => {
+            track.style.transform = `translateX(${-index * 100}%)`;
+          };
+          const go = (to) => {
+            index = (to + slides.length) % slides.length;
+            update();
+          };
+          prev?.addEventListener("click", () => go(index - 1));
+          next?.addEventListener("click", () => go(index + 1));
+          let startX = null;
+          track.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), {
+            passive: true,
+          });
+          track.addEventListener("touchend", (e) => {
+            if (startX == null) return;
+            const dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+            startX = null;
+          });
           update();
-        }
-
-        prev.addEventListener("click", () => go(index - 1)); // листаем влево
-        next.addEventListener("click", () => go(index + 1)); // листаем вправо
-
-        // Свайпы на тач-экранах (по желанию)
-        let startX = null;
-        track.addEventListener("touchstart", (e) => (startX = e.touches[0].clientX), {
-          passive: true,
         });
-        track.addEventListener("touchend", (e) => {
-          if (startX == null) return;
-          const dx = e.changedTouches[0].clientX - startX;
-          if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
-          startX = null;
-        });
-
-        update(); // первичная отрисовка
       })();
     </script>
   </body>
