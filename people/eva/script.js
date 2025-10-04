@@ -4,7 +4,7 @@
   if (!btn) return;
   btn.addEventListener("click", () => {
     if (history.length > 1) history.back();
-    else window.scrollTo({ top: 0, behavior: "smooth" });
+    else window.location.href = "index.html";
   });
 })();
 
