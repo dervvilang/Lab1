@@ -1,10 +1,17 @@
 // Кнопка «Назад» (фолбэк на прокрутку к началу)
 (function () {
   const btn = document.getElementById("nav-back");
-  if (!btn) return;
-  btn.addEventListener("click", () => {
-    if (history.length > 1) history.back();
-    else window.location.href = "index.html";
+  if (!btn || !(btn instanceof HTMLElement)) return;
+  btn.addEventListener("click", (event) => {
+    if (history.length > 1) {
+      event.preventDefault();
+      history.back();
+      return;
+    }
+    if (!(btn instanceof HTMLAnchorElement)) {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   });
 })();
 
