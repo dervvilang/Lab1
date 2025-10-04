@@ -63,7 +63,7 @@
       setTimeout(() => tip.remove(), 3800);
       localStorage.setItem('bb.tipShown', '1');
     }
-  } catch (e) { /* приватный режим — просто пропустим */ }
+  } catch (e) {}
 })();
 (function() {
   const backControl = document.getElementById("nav-back");

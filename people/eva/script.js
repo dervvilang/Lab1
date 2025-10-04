@@ -1,4 +1,3 @@
-// Кнопка «Назад» (фолбэк на прокрутку к началу)
 (function () {
   const btn = document.getElementById("nav-back");
   if (!btn || !(btn instanceof HTMLElement)) return;
@@ -15,7 +14,6 @@
   });
 })();
 
-// Инициализация слайдеров (для всех [data-component="slider"])
 (function () {
   const sliders = document.querySelectorAll('[data-component="slider"]');
   sliders.forEach((root) => {

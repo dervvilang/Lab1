@@ -1,4 +1,3 @@
-/* Дизайн‑токены */
 :root {
   --bg: #100201;
   --paper: #1f0a09;
@@ -180,7 +179,7 @@ h2 {
   background: var(--paper);
 }
 
-/* Лэйаут «about» (2 колонки) */
+/* about */
 .about {
   display: flex;
   align-items: stretch;
@@ -213,7 +212,7 @@ h2 {
   color: var(--brand-2);
 }
 
-/* Слайдер */
+/* слайдер */
 .slider {
   position: relative;
   height: 100%;
@@ -263,7 +262,7 @@ h2 {
   right: 10px;
 }
 
-/* Сетка карточек */
+/* сетка карточек */
 .grid {
   display: grid;
   gap: var(--gap);
@@ -276,7 +275,7 @@ h2 {
   background: rgba(0, 0, 0, 0.1);
 }
 
-/* Таймлайн */
+/* таймлайн */
 .timeline {
   position: relative;
   margin: 8px 0 0;
@@ -315,7 +314,7 @@ h2 {
   font-size: 0.95em;
 }
 
-/* Цитаты */
+/* цитаты */
 .quote-card blockquote {
   margin: 0 0 8px;
   font-style: italic;
@@ -331,7 +330,7 @@ h2 {
   font-size: 0.95em;
 }
 
-/* Символы */
+/* символы */
 .symbol-card h3 {
   margin: 0 0 6px;
   font-size: 26px;
@@ -341,7 +340,7 @@ h2 {
   margin: 0;
 }
 
-/* Мобайл ≤768px */
+/* мобайл ≤768px */
 @media (max-width: 768px) {
   h1 {
     font-size: 40px;
@@ -356,7 +355,7 @@ h2 {
     flex-direction: column;
   }
 
-  /* Навбар: горизонтальная прокрутка вместо переноса */
+  /* горизонтальная прокрутка навбара */
   .nav__menu {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -368,7 +367,7 @@ h2 {
   }
 }
 
-/* Десктоп ≥1024px */
+/* десктоп ≥1024px */
 @media (min-width: 1024px) {
   .about__left {
     flex: 0 1 58%;
@@ -381,7 +380,7 @@ h2 {
   }
 }
 
-/* Доступность: уменьшенное движение */
+/* доступность: уменьшенное движение */
 @media (prefers-reduced-motion: reduce) {
   .slider__track {
     transition: none;

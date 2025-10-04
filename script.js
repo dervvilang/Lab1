@@ -1,4 +1,3 @@
-// Плавное появление карточек при прокрутке
 (function () {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cards = Array.from(document.querySelectorAll('.card'));
