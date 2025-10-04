@@ -1,16 +1,19 @@
 (function () {
   const btn = document.getElementById("nav-back");
   if (!btn || !(btn instanceof HTMLElement)) return;
+  const fallbackHref = "../../index.html#team";
+
+  if (btn instanceof HTMLAnchorElement) {
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.location.assign(btn.href || fallbackHref);
+    });
+    return;
+  }
+
   btn.addEventListener("click", (event) => {
-    if (history.length > 1) {
-      event.preventDefault();
-      history.back();
-      return;
-    }
-    if (!(btn instanceof HTMLAnchorElement)) {
-      event.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    event.preventDefault();
+    window.location.assign(fallbackHref);
   });
 })();
 
