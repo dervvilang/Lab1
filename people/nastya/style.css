@@ -112,7 +112,7 @@ button:hover {
   justify-content: center;
 }
 
-.return-btn-container button {
+.return-btn-container .return-btn {
   padding: 12px 28px;
   font-size: 1.05rem;
   background: #800020;
@@ -123,15 +123,16 @@ button:hover {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   transition: all 0.4s ease;
-  overflow: visible; 
+  overflow: visible;
   position: relative;
+  text-decoration: none;
 }
 
-.return-btn-container button::after {
-  content: none; 
+.return-btn-container .return-btn::after {
+  content: none;
 }
 
-.return-btn-container button:hover {
+.return-btn-container .return-btn:hover {
   background: #f0e6d2;
   color: #800020;
   transform: scale(1.05) rotate(-2deg);

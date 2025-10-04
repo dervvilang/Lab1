@@ -8,3 +8,20 @@ document.getElementById("moreBtn").addEventListener("click", function() {
     this.textContent = "Показать больше";
   }
 });
+(function() {
+  const backControl = document.getElementById("nav-back");
+  if (!backControl || !(backControl instanceof HTMLElement)) return;
+
+  backControl.addEventListener("click", (event) => {
+    if (history.length > 1) {
+      event.preventDefault();
+      history.back();
+      return;
+    }
+
+    if (!(backControl instanceof HTMLAnchorElement)) {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+})();
